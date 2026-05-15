@@ -4,6 +4,7 @@
   (:require
    [cljsjs.react]
    [cljsjs.react.dom]
+   ["react-dom/client" :as rdc]
    [goog.object :as gobj]
    [goog.functions :as fns]
    [clojure.set :as set]
@@ -275,6 +276,20 @@
   [element node]
   (js/ReactDOM.render element node)
   nil)
+
+(defn create-root
+  "Create React root to render into."
+  ([element opts]
+   (rdc/createRoot element opts))
+  ([element]
+   (rdc/createRoot element)))
+
+(defn mount-root
+  "Creates a root with ReactDOM.createRoot and renders the node into that root."
+  ([element node]
+   (mount-root element node {}))
+  ([element node root-opts]
+   (.render (create-root element root-opts) node)))
 
 (defn unmount
   "Removes component from the DOM tree."
